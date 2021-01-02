@@ -9,7 +9,7 @@ rc="0"
 server="10.30.50.2"
 [ -n "$1" ] && server="$1"
 
-# The following tests query the server to verify that it is running and syncing with its pool servers.
+# The following tests query the tftp server for files and verifies the results.
 
 echo "INFO: Beginning tests for server $server."
 
