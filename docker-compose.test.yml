@@ -1,0 +1,38 @@
+version: '3'
+
+# Automated test compose file.
+
+services:
+  app:
+    image: lochnerr/tftpd
+    restart: "no"
+    hostname: app.example.com
+    volumes:
+      - data:/var/tftpboot
+    networks:
+      testnet:
+        ipv4_address: 10.30.50.2
+  sut:
+    image: lochnerr/tftpd
+    command: /usr/local/bin/run-sut.sh
+    restart: "no"
+    hostname: sut.example.com
+    volumes:
+      - data:/var/tftpboot
+    networks:
+      testnet:
+        ipv4_address: 10.30.50.3
+    depends_on:
+      - app
+
+volumes:
+  data:
+
+networks:
+  testnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.30.50.0/24
+
