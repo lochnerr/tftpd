@@ -6,7 +6,7 @@ set -e
 
 rc="0"
 
-server="10.30.50.2"
+server="app"
 [ -n "$1" ] && server="$1"
 
 # The following tests query the server to verify that it is running and syncing with its pool servers.
