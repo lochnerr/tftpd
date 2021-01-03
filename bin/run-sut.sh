@@ -13,6 +13,10 @@ server="app"
 
 echo "INFO: Beginning tests for server $server."
 
+delay="2s"
+echo "INFO: Sleeping for $delay to let server come online."
+sleep $delay
+
 # Expect an error getting a nonexistant file.
 if [ -z "$(tftp -4 $server -c get /nonexistantfile)" ]; then
   echo "ERROR: Getting non-existant file did not fail."
@@ -37,7 +41,7 @@ cat >/var/tftpboot/sample.txt <<-__EOF__
 	Finally, the last line of data!
 	__EOF__
 
-# Expect No error getting the file we just place on the shared data volume.
+# Expect no error getting the file we just placed on the shared data volume.
 if [ -n "$(tftp -4 $server -c get /sample.txt)" ]; then
   echo "ERROR: Getting existing file failed."
   rc="1"
@@ -45,9 +49,9 @@ else
   echo "INFO: Getting existing file test passed!"
 fi
 
-# Files should be identical.
+# Expect files to be identical.
 touch sample.txt
-if ! diff /var/tftpboot/sample.txt sample.txt ; then
+if ! diff /var/tftpboot/sample.txt sample.txt >/dev/null 2>&1 ; then
   echo "ERROR: Contents of retrieved file do not match expected contents."
   rc="1"
 else

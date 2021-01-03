@@ -10,7 +10,7 @@ services:
     volumes:
       - data:/var/tftpboot
     ports:
-      - "69:69"
+      - "69:69/udp"
   sut:
     image: lochnerr/tftpd
     command: /usr/local/bin/run-sut.sh
